@@ -2,10 +2,13 @@ package com.alexiscassion.dotscreens_android_test;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.ColorFilter;
 import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.alexiscassion.dotscreens_android_test.view_model.GameViewModel;
+
+import static com.alexiscassion.dotscreens_android_test.model.Player.X;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -28,6 +31,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         GameViewModel gameViewModel = new GameViewModel();
+        gameViewModel.addGameStateListener(() -> {
+            for (int i=0; i<3; i++) {
+                for (int j=0; j<3; j++) {
+                    cells[i*3 + j].setColorFilter(X.getColor());
+                }
+            }
+        });
 
 
 

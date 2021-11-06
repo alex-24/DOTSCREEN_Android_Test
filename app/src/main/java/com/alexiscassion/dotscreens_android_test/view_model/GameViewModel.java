@@ -4,15 +4,20 @@ import android.os.CountDownTimer;
 
 import com.alexiscassion.dotscreens_android_test.model.Board;
 import com.alexiscassion.dotscreens_android_test.model.Player;
+import com.alexiscassion.dotscreens_android_test.utils.GameStateListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class GameViewModel extends ViewModel {
+
+    private List<GameStateListener> gameStateListeners = new ArrayList<>();
 
     //private boolean gameIsOngoing = false;
     private Board board;
@@ -140,5 +145,9 @@ public class GameViewModel extends ViewModel {
         }
         this.gameOver = true;
         this.timer.cancel();
+    }
+
+    public void addGameStateListener(GameStateListener listener) {
+        this.gameStateListeners.add(listener);
     }
 }
