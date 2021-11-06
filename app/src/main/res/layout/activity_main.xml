@@ -12,29 +12,27 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="8dp"
-        app:cardElevation="4dp">
+        android:layout_margin="@dimen/card_margin"
+        android:padding="@dimen/card_padding"
+        app:cardElevation="@dimen/card_elevation">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-                <GridView
-                    android:id="@+id/activity_main_grid_view"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:numColumns="3"
+            <TextView
+                android:id="@+id/activity_main_text_view_timer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                android:textAlignment="center"
+                android:textColor="@color/design_default_color_error"/>
 
-                    android:orientation="horizontal"
-                    android:horizontalSpacing="8dp"
-                    android:verticalSpacing="8dp"
-                    android:background="@color/black"
-                    app:layout_constraintDimensionRatio="H,1:1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"/>
+            <include layout="@layout/grid"/>
+        </LinearLayout>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.cardview.widget.CardView>

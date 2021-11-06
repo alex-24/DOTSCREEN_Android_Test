@@ -39,9 +39,10 @@ public enum Player {
 
             case O:
                 return R.drawable.o;
-        }
 
-        return -1;
+            default:
+                return R.drawable.blank;
+        }
     }
 
 }

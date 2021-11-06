@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Toast;
 
 import com.alexiscassion.dotscreens_android_test.model.Player;
 import com.alexiscassion.dotscreens_android_test.view.GridCellWidget;
@@ -26,7 +27,7 @@ public class GameBoardAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int i) {
-        return this.gameBoardViewModel.getGameBoard().get(i/3, i%3);
+        return this.gameBoardViewModel.getGameBoard().get(i%3, i/3);
     }
 
     @Override
@@ -42,9 +43,7 @@ public class GameBoardAdapter extends BaseAdapter {
             res = new GridCellWidget(this.context);
         }
         ((GridCellWidget) res).updateCell((Player) getItem(i));
-        ((GridCellWidget) res).setOnClickListener(view1 -> {
-            gameBoardViewModel.insertMarkAt(i/3, i%3);
-        });
+        ((GridCellWidget) res).setOnClickListener(view1 -> gameBoardViewModel.insertMarkAt(i%3, i/3));
 
         return  res;
     }

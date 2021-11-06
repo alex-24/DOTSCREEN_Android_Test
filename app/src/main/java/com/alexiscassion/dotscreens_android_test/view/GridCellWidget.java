@@ -29,8 +29,8 @@ public class GridCellWidget extends ConstraintLayout {
     }
 
     private void initView(Context context, AttributeSet attrs, int defStyleAttr){
-        this.playerIconImageView = findViewById(R.id.image_view_player_icon);
         inflate(context, R.layout.grid_cell, this);
+        this.playerIconImageView = findViewById(R.id.grid_cell_image_view_player_icon);
     }
 
     public void updateCell(Player player) {
