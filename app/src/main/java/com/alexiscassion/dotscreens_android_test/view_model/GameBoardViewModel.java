@@ -2,12 +2,10 @@ package com.alexiscassion.dotscreens_android_test.view_model;
 
 import android.os.CountDownTimer;
 
-import com.alexiscassion.dotscreens_android_test.model.Board;
+import com.alexiscassion.dotscreens_android_test.model.GameBoard;
 import com.alexiscassion.dotscreens_android_test.model.Player;
 import com.alexiscassion.dotscreens_android_test.utils.GameStateListener;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -15,12 +13,12 @@ import java.util.Locale;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GameViewModel extends ViewModel {
+public class GameBoardViewModel extends ViewModel {
 
     private List<GameStateListener> gameStateListeners = new ArrayList<>();
 
     //private boolean gameIsOngoing = false;
-    private Board board;
+    private GameBoard gameBoard;
     private int[] scores = new int[2];
     private Player currentPlayer;
     private Player winner;
@@ -29,11 +27,13 @@ public class GameViewModel extends ViewModel {
     private CountDownTimer timer;
     private boolean firstMove = true;
 
-    public GameViewModel() {
-        this.board = new Board();
+    public GameBoardViewModel() {
+        this.gameBoard = new GameBoard();
 
         this.scores[0] = 0;
         this.scores[1] = 0;
+        this.formattedTimerLabel = new MutableLiveData<>();
+        this.formattedTimerLabel.setValue("03:00");
 
         this.timer = new CountDownTimer(180000, 1000) {
             @Override
@@ -50,12 +50,12 @@ public class GameViewModel extends ViewModel {
         };
     }
 
-    public Board getBoard() {
-        return this.board;
+    public GameBoard getGameBoard() {
+        return this.gameBoard;
     }
 
     public void resetGame(boolean startNewGame) {
-        this.board = new Board();
+        this.gameBoard = new GameBoard();
         this.winner = null;
 
         if (startNewGame) {
@@ -83,12 +83,12 @@ public class GameViewModel extends ViewModel {
         }
 
         // is cell empty?
-        if (this.board.get(x, y) == null || this.gameOver) {
+        if (this.gameBoard.get(x, y) == null || this.gameOver) {
             return;
         }
 
         // adding a mark for the current player at (x, y)
-        this.board.set(x, y, currentPlayer);
+        this.gameBoard.set(x, y, currentPlayer);
 
         // check if current player won
         calcWinner(x, y);
@@ -97,6 +97,7 @@ public class GameViewModel extends ViewModel {
         calcGameOver();
 
         this.currentPlayer = (this.gameOver)? null : this.currentPlayer.next();
+        notifyBoardListeners();
     }
 
     private void calcWinner(int x, int y) {
@@ -104,13 +105,13 @@ public class GameViewModel extends ViewModel {
         this.winner = currentPlayer;
         for (int i = 0; i < 3; i++) {
             // * horizontal
-            if (board.get(i, y) != currentPlayer) {
+            if (gameBoard.get(i, y) != currentPlayer) {
                 this.winner = null;
                 break;
             }
 
             // * vertical
-            if (board.get(x, i) != currentPlayer) {
+            if (gameBoard.get(x, i) != currentPlayer) {
                 this.winner = null;
                 break;
             }
@@ -119,12 +120,12 @@ public class GameViewModel extends ViewModel {
         // diagonals
         if (x == y && this.winner == null)  {
             for (int i=0; i<3; i++) {
-                if (this.board.get(i, i) != currentPlayer) {
+                if (this.gameBoard.get(i, i) != currentPlayer) {
                     this.winner = null;
                 }
             }
             for (int i=0; i<3; i++) {
-                if (this.board.get(2-i, i) != currentPlayer) {
+                if (this.gameBoard.get(2-i, i) != currentPlayer) {
                     this.winner = null;
                 }
             }
@@ -136,7 +137,7 @@ public class GameViewModel extends ViewModel {
         if (this.winner == null) {
             for (int i = 0; i < 3; i++) {
                 for (int j = 0; j < 3; j++) {
-                    if (this.board.get(i, j) == null) {
+                    if (this.gameBoard.get(i, j) == null) {
                         this.gameOver = false;
                         return;
                     }
@@ -147,7 +148,17 @@ public class GameViewModel extends ViewModel {
         this.timer.cancel();
     }
 
-    public void addGameStateListener(GameStateListener listener) {
+    public void addGameBoardListener(GameStateListener listener) {
         this.gameStateListeners.add(listener);
+    }
+
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
+
+    public void notifyBoardListeners() {
+        for (GameStateListener listener : this.gameStateListeners) {
+            listener.onGameBoardUpdated();
+        }
     }
 }

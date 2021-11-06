@@ -32,13 +32,13 @@ public enum Player {
         }
     }
 
-    public int getRessourceDrawableID() {
+    public int getDrawableID() {
         switch (this) {
             case X:
-                return R.raw.x;
+                return R.drawable.x;
 
             case O:
-                return R.raw.o;
+                return R.drawable.o;
         }
 
         return -1;

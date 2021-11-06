@@ -1,6 +1,6 @@
 package com.alexiscassion.dotscreens_android_test.model;
 
-public class Board {
+public class GameBoard {
 
 
     private Player[][] gameState = new Player[3][3];
