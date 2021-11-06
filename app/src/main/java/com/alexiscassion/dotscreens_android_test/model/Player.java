@@ -6,25 +6,25 @@ import com.alexiscassion.dotscreens_android_test.R;
 
 public enum Player {
 
-    X, O;
+    ONE, TWO;
 
     public Player next() {
         switch (this) {
-            case X:
-                return O;
+            case ONE:
+                return TWO;
 
-            case O:
+            case TWO:
             default:
-                return X;
+                return ONE;
         }
     }
 
     public int getColor() {
         switch (this) {
-            case X:
+            case ONE:
                 return Color.RED;
 
-            case O:
+            case TWO:
                 return Color.BLUE;
 
             default:
@@ -34,14 +34,27 @@ public enum Player {
 
     public int getDrawableID() {
         switch (this) {
-            case X:
+            case ONE:
                 return R.drawable.x;
 
-            case O:
+            case TWO:
                 return R.drawable.o;
 
             default:
                 return R.drawable.blank;
+        }
+    }
+
+    public Character getSymbolText() {
+        switch (this) {
+            case ONE:
+                return 'X';
+
+            case TWO:
+                return 'O';
+
+            default:
+                return null;
         }
     }
 

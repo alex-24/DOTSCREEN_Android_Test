@@ -7,30 +7,28 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/grey">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_margin"
-        android:padding="@dimen/card_padding"
         app:cardElevation="@dimen/card_elevation">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/card_padding"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/activity_main_text_view_timer"
+            <include layout="@layout/game_info"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="48sp"
-                android:textStyle="bold"
-                android:textAlignment="center"
-                android:textColor="@color/design_default_color_error"/>
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
-            <include layout="@layout/grid"/>
+            <include layout="@layout/game_grid"/>
+
         </LinearLayout>
 
 

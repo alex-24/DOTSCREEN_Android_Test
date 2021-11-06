@@ -1,7 +1,6 @@
 package com.alexiscassion.dotscreens_android_test.view_model;
 
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import com.alexiscassion.dotscreens_android_test.model.GameBoard;
 import com.alexiscassion.dotscreens_android_test.model.Player;
@@ -22,50 +21,48 @@ public class GameBoardViewModel extends ViewModel {
 
     //private boolean gameIsOngoing = false;
     private GameBoard gameBoard;
-    private final int[] scores = new int[2];
-    private Player currentPlayer;
-    private Player winner;
-    private boolean isGameOver = false;
-    private MutableLiveData<String> formattedTimerLabel;
+    private MutableLiveData<int[]> scores;
+    private MutableLiveData<Player> currentPlayer;
+    private MutableLiveData<Boolean> isGameOver;
+    private final MutableLiveData<String> formattedTimerLabel;
     private CountDownTimer timer;
     private boolean firstMove = true;
+    private boolean isSetOver = false;
 
     public GameBoardViewModel() {
         this.gameBoard = new GameBoard();
 
-        this.scores[0] = 0;
-        this.scores[1] = 0;
+        this.currentPlayer = new MutableLiveData<>();
+
+        this.scores = new MutableLiveData<>();
+        this.scores.setValue(new int[]{0 , 0});
+
         this.formattedTimerLabel = new MutableLiveData<>();
         this.formattedTimerLabel.setValue("03:00");
+
+        this.isGameOver = new MutableLiveData<>();
+        this.isGameOver.setValue(false);
 
         this.timer = new CountDownTimer(180000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 int minutes = (int) ((millisUntilFinished / (1000*60)) % 60);
                 int seconds = (int) (millisUntilFinished / 1000) % 60;
-                formattedTimerLabel.setValue(String.format(Locale.FRANCE, "%2d:%2d", minutes, seconds));
+                formattedTimerLabel.setValue(String.format(Locale.FRANCE, "%02d:%02d", minutes, seconds));
             }
 
             @Override
             public void onFinish() {
-
+                isGameOver.setValue(true);
             }
         };
     }
 
-    public GameBoard getGameBoard() {
-        return this.gameBoard;
-    }
 
-    public void resetGame(boolean startNewGame) {
+    public void clearBoard() {
+        this.isSetOver = false;
         this.gameBoard = new GameBoard();
-        this.winner = null;
-
-        if (startNewGame) {
-            this.currentPlayer = Player.X;
-        } else {
-            this.currentPlayer = null;
-        }
+        notifyBoardListeners();
     }
 
     /**
@@ -84,37 +81,48 @@ public class GameBoardViewModel extends ViewModel {
 
         if (this.firstMove) {
             this.firstMove = false;
-            this.currentPlayer = Player.values()[this.random.nextInt(2)];
+            this.currentPlayer.setValue(Player.ONE);
             this.timer.start();
         }
 
         // is cell empty?
-        if (this.gameBoard.get(x, y) != null || this.isGameOver) {
+        if (this.gameBoard.get(x, y) != null || (this.isGameOver.getValue())) {
             return;
         }
 
         // adding a mark for the current player at (x, y)
-        this.gameBoard.set(x, y, currentPlayer);
+        this.gameBoard.set(x, y, currentPlayer.getValue());
 
         // check if current player won
-        hasPlayerWon(x, y);
-        Log.e("---", "" + this.winner);
+        calcPlayerWon(x, y);
+        if (this.isSetOver) {
+            this.currentPlayer.setValue((this.isGameOver.getValue())? null : this.currentPlayer.getValue().next());
+            clearBoard();
+            return;
+
+        }
 
         // check if game ended in a draw
-        calcGameOver();
+        calcDraw();
+        if (this.isSetOver) {
+            this.currentPlayer.setValue((this.isGameOver.getValue())? null : this.currentPlayer.getValue().next());
+            clearBoard();
+            return;
+        }
 
-        this.currentPlayer = (this.isGameOver)? null : this.currentPlayer.next();
+
+        this.currentPlayer.setValue((this.isGameOver.getValue())? null : this.currentPlayer.getValue().next());
         notifyBoardListeners();
     }
 
-    private void hasPlayerWon(int x, int y) {
+    private void calcPlayerWon(int x, int y) {
         boolean hasWon;
 
 
         // * horizontal
         hasWon = true;
         for (int i = 0; i < 3; i++) {
-            if (this.gameBoard.get(i, y) != this.currentPlayer) {
+            if (this.gameBoard.get(i, y) != this.currentPlayer.getValue()) {
                 hasWon = false;
                 break;
             }
@@ -129,7 +137,7 @@ public class GameBoardViewModel extends ViewModel {
         // * vertical
         hasWon = true;
         for (int i = 0; i < 3; i++) {
-            if (this.gameBoard.get(x, i) != this.currentPlayer) {
+            if (this.gameBoard.get(x, i) != this.currentPlayer.getValue()) {
                 hasWon = false;
                 break;
             }
@@ -143,7 +151,7 @@ public class GameBoardViewModel extends ViewModel {
         if (x == y)  {
             hasWon = true;
             for (int i=0; i<3; i++) {
-                if (this.gameBoard.get(i, i) != this.currentPlayer) {
+                if (this.gameBoard.get(i, i) != this.currentPlayer.getValue()) {
                     hasWon = false;
                 }
             }
@@ -154,7 +162,7 @@ public class GameBoardViewModel extends ViewModel {
 
             hasWon = true;
             for (int i=0; i<3; i++) {
-                if (this.gameBoard.get(2-i, i) != this.currentPlayer) {
+                if (this.gameBoard.get(2-i, i) != this.currentPlayer.getValue()) {
                     hasWon = false;
                 }
             }
@@ -165,35 +173,46 @@ public class GameBoardViewModel extends ViewModel {
     }
 
     private void setCurrentPlayerHasWon() {
-        this.winner = this.currentPlayer;
+        int[] scores = this.scores.getValue();
+        scores[this.currentPlayer.getValue().ordinal()]++;
+        this.scores.setValue(scores);
+        this.isSetOver = true;
     }
 
-    private void calcGameOver(){
+    private void calcDraw(){
 
-        if (this.winner == null) {
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    if (this.gameBoard.get(i, j) == null) {
-                        this.isGameOver = false;
-                        return;
-                    }
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (this.gameBoard.get(i, j) == null) {
+                    return;
                 }
             }
         }
-        this.isGameOver = true;
-        this.timer.cancel();
+        this.isSetOver = true;
     }
 
     public void addGameBoardListener(GameStateListener listener) {
         this.gameStateListeners.add(listener);
     }
 
-    public Player getCurrentPlayer() {
+    public GameBoard getGameBoard() {
+        return this.gameBoard;
+    }
+
+    public MutableLiveData<Player> getCurrentPlayer() {
         return currentPlayer;
+    }
+
+    public MutableLiveData<Boolean> getIsGameOver() {
+        return isGameOver;
     }
 
     public MutableLiveData<String> getFormattedTimerLabel() {
         return formattedTimerLabel;
+    }
+
+    public MutableLiveData<int[]> getScores() {
+        return scores;
     }
 
     public void notifyBoardListeners() {

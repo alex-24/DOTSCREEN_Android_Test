@@ -35,7 +35,7 @@ public class GridCellWidget extends ConstraintLayout {
 
     public void updateCell(Player player) {
         if (player !=  null) {
-            this.playerIconImageView.setColorFilter(player.getColor());
+            //this.playerIconImageView.setColorFilter(player.getColor());
             this.playerIconImageView.setImageDrawable(getResources().getDrawable(player.getDrawableID(), getContext().getTheme()));
         }
     }
