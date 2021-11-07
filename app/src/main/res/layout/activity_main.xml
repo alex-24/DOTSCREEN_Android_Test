@@ -11,23 +11,30 @@
     android:background="@color/grey">
 
     <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/card_margin"
         app:cardElevation="@dimen/card_elevation">
 
         <LinearLayout
+            android:id="@+id/activity_main_linear_layout_root"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_margin="@dimen/card_padding"
+            android:gravity="center"
+            android:layout_gravity="center_horizontal"
             android:orientation="vertical">
 
             <include layout="@layout/game_info"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"/>
 
-            <include layout="@layout/game_grid"/>
+            <include layout="@layout/game_grid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+
 
         </LinearLayout>
 

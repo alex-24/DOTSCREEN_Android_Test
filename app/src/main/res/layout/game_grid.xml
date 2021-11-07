@@ -1,22 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <GridView
         android:id="@+id/activity_main_grid_view"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="3"
         android:orientation="horizontal"
         android:horizontalSpacing="@dimen/grid_spacing"
-        android:verticalSpacing="8dp"
+        android:verticalSpacing="@dimen/grid_spacing"
         android:background="@color/black"
-        app:layout_constraintDimensionRatio="H,1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintDimensionRatio="H,1:1"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -24,7 +24,6 @@
         android:layout_height="50dp">
 
         <ImageView
-            android:visibility="invisible"
             android:id="@+id/activity_main_image_view_current_player_p1"
             android:layout_width="0dp"
             android:layout_height="20dp"

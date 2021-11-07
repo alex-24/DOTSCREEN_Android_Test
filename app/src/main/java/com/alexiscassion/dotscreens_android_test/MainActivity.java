@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alexiscassion.dotscreens_android_test.model.Player;
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements GameStateListener
 
 
     private GameBoardViewModel gameBoardViewModel;
+
+    private LinearLayout rootLinearLayout;
 
     private TextView timerTextView;
 
@@ -88,7 +92,21 @@ public class MainActivity extends AppCompatActivity implements GameStateListener
         this.gridView.setAdapter(new GameBoardAdapter(this, this.gameBoardViewModel));
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            this.rootLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
+            this.rootLinearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
+        } else {
+            this.rootLinearLayout.setOrientation(LinearLayout.VERTICAL);
+            this.rootLinearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
+        }
+        onGameBoardUpdated();
+    }
+
     private void findViews(){
+        this.rootLinearLayout = findViewById(R.id.activity_main_linear_layout_root);
         this.timerTextView = findViewById(R.id.activity_main_text_view_timer);
         this.player1IndicatorImageView = findViewById(R.id.activity_main_image_view_current_player_p1);
         this.player1ScoreTextView = findViewById(R.id.activity_main_text_view_player_1_score);
