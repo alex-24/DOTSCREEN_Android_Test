@@ -59,17 +59,28 @@ An android phone or tablet running at minimum Android 5.0 (API 21)
 
 ### Installation
 
-1. APK
+<b>Option 1 :</b> get the APK from this github
 
-Download the apk from <a href="https://github.com/alex-24/DOTSCREEN_Android_Test/tree/master/app/build/outputs/apk/debug"> here </a> (app-debug.apk)
+ - Download the apk from <a href="https://github.com/alex-24/DOTSCREEN_Android_Test/tree/master/app/build/outputs/apk/debug"> here </a> (app-debug.apk)
 
-Locate the apk file on your device and click on it to install. 
+ - Locate the apk file on your device and click on it to install. 
 
-When prompted allow the installation from unknown sources.
+ - When prompted allow the installation from unknown sources.
 
-2. Build and run
+<br/>
 
-Download the project, open it in Android Studio and run the app.
+2. Option 2 : Download the project and run it from your computer
+
+ - Clone the project
+ - Import it in Android Studio
+ - Plug in an Android device that is already configured for development (or use an emulator)
+ - Build and run the project.
+ 
+ This is the Android Studio version I used :
+
+<div align="center"> 
+    <img src="readme_images/android_studio_version.png" width="200px">
+</div>
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -79,4 +90,3 @@ Download the project, open it in Android Studio and run the app.
 <!-- MARKDOWN LINKS & IMAGES -->
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/alexis-cassion
-[app-screenshot]: readme_images/screenshot.png
