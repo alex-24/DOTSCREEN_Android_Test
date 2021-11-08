@@ -10,39 +10,19 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <img src="readme_images/project-logo.png" alt="Logo" width="100">
   <h3 align="center">Tic Tac Toe - Android</h3>
+  <img src="readme_images/project-logo.png" alt="Logo" width="100">
 </div>
 
-
-
-<!-- TABLE OF CONTENTS -->
-<details>
-  <summary>Table of Contents</summary>
-  <ol>
-    <li>
-      <a href="#about-the-project">About The Project</a>
-      <ul>
-        <li><a href="#built-with">Built With</a></li>
-      </ul>
-    </li>
-    <li>
-      <a href="#testing-the-app">Testing the app</a>
-      <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
-        <li><a href="#installation">Installation</a></li>
-      </ul>
-    </li>
-    <li><a href="#screenshots">Screen Shots</a></li>
-  </ol>
-</details>
 
 
 
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![App Screenshot][product-screenshot]]()
+<div align="center">
+    <img src="readme_images/screenshot.png">
+</div>
 
 This project was made as part of an Android Coding test.
 
@@ -55,7 +35,7 @@ Until time runs out they can play as many sets as they link and at the end a pop
 
 ### Built With
 
-Native Android (Java)
+Only the standard Android SDK was used in this project.
 
 * [Android](https://developer.android.com/docs)
 * [Java](https://dev.java/)
@@ -75,7 +55,7 @@ An android phone or tablet running at minimum Android 5.0 (API 21)
 
 1. APK
 
-Download the apk from <a href="https://github.com/alex-24/DOTSCREEN_Android_Test/tree/master/app/build/outputs/apk/debug> here </a> (app-debug.apk)
+Download the apk from <a href="https://github.com/alex-24/DOTSCREEN_Android_Test/tree/master/app/build/outputs/apk/debug"> here </a> (app-debug.apk)
 
 Locate the apk file on your device and click on it to install. 
 
