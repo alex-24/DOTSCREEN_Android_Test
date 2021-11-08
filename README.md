@@ -20,7 +20,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This project was made as part of an Android Coding test.
+This project was made as part of an Android Technical test.
 
 The app is a timed Tic Tac Toes game between two human players using the same device.
 Until time runs out they can play as many sets as they want. At the end a popup displays the overall game result.
