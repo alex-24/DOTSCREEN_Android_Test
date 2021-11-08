@@ -79,7 +79,7 @@ An android phone or tablet running at minimum Android 5.0 (API 21)
  This is the Android Studio version I used :
 
 <div align="center"> 
-    <img src="readme_images/android_studio_version.png" width="200px">
+    <img src="readme_images/android_studio_version.png" width="350px">
 </div>
 
 
