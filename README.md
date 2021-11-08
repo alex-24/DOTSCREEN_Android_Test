@@ -31,7 +31,7 @@ Until time runs out they can play as many sets as they want. At the end a popup 
 ## Screenshot
 
 <div align="center">
-    <img src="readme_images/screenshot.png" width="450px">
+    <img src="readme_images/screenshot.png">
 </div>
 <br/>
 
