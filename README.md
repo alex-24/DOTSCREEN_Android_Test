@@ -69,7 +69,7 @@ An android phone or tablet running at minimum Android 5.0 (API 21)
 
 <br/>
 
-<b>Option 2 :</br> Download the project and run it from your computer
+<b>Option 2 :</b> Download the project and run it from your computer
 
  - Clone the project
  - Import it in Android Studio
