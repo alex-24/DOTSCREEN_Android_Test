@@ -69,18 +69,20 @@ An android phone or tablet running at minimum Android 5.0 (API 21)
 
 <br/>
 
-2. Option 2 : Download the project and run it from your computer
+<b>Option 2 :</br> Download the project and run it from your computer
 
  - Clone the project
  - Import it in Android Studio
- - Plug in an Android device that is already configured for development (or use an emulator)
+ - Plug in an Android device that is  configured for development (or use an emulator)
  - Build and run the project.
  
  This is the Android Studio version I used :
 
+<br/>
 <div align="center"> 
     <img src="readme_images/android_studio_version.png" width="350px">
 </div>
+<br/>
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
