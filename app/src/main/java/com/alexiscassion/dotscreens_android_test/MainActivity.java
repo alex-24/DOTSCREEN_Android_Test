@@ -1,13 +1,12 @@
 package com.alexiscassion.dotscreens_android_test;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 
-import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -46,10 +45,42 @@ public class MainActivity extends AppCompatActivity implements GameStateListener
         setContentView(R.layout.activity_main);
         findViews();
 
-        this.gameBoardViewModel = new GameBoardViewModel();
+
+
+        if (savedInstanceState != null) {
+            this.gameBoardViewModel = (GameBoardViewModel) savedInstanceState.getSerializable("gbvm");
+        } else {
+            this.gameBoardViewModel = new GameBoardViewModel();
+        }
+
+        linkActivityWithViewModel();
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+
+        if (savedInstanceState != null) {
+            this.gameBoardViewModel = (GameBoardViewModel) savedInstanceState.getSerializable("gbvm");
+        } else {
+            this.gameBoardViewModel = new GameBoardViewModel();
+        }
+
+        linkActivityWithViewModel();
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putSerializable("gbvm", this.gameBoardViewModel);
+    }
+
+    private void linkActivityWithViewModel() {
 
         // listen for board changes
-        this.gameBoardViewModel.addGameBoardListener(this);
+        this.gameBoardViewModel.setGameBoardListener(this);
 
         // listen for timer changes
         this.gameBoardViewModel.getFormattedTimerLabel().observe(this, new Observer<String>() {
@@ -90,6 +121,7 @@ public class MainActivity extends AppCompatActivity implements GameStateListener
         });
 
         this.gridView.setAdapter(new GameBoardAdapter(this, this.gameBoardViewModel));
+
     }
 
     @Override
@@ -102,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements GameStateListener
             this.rootLinearLayout.setOrientation(LinearLayout.VERTICAL);
             this.rootLinearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
         }
-        onGameBoardUpdated();
     }
 
     private void findViews(){

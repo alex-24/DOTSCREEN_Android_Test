@@ -6,26 +6,25 @@ import com.alexiscassion.dotscreens_android_test.model.GameBoard;
 import com.alexiscassion.dotscreens_android_test.model.Player;
 import com.alexiscassion.dotscreens_android_test.utils.GameStateListener;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 import java.util.Locale;
 import java.util.Random;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class GameBoardViewModel extends ViewModel {
+public class GameBoardViewModel extends ViewModel implements Serializable {
 
-    private final List<GameStateListener> gameStateListeners = new ArrayList<>();
+    private GameStateListener gameStateListener;
     private final Random random = new Random();
 
     //private boolean gameIsOngoing = false;
     private GameBoard gameBoard;
-    private MutableLiveData<int[]> scores;
-    private MutableLiveData<Player> currentPlayer;
-    private MutableLiveData<Boolean> isGameOver;
+    private final MutableLiveData<int[]> scores;
+    private final MutableLiveData<Player> currentPlayer;
+    private final MutableLiveData<Boolean> isGameOver;
     private final MutableLiveData<String> formattedTimerLabel;
-    private CountDownTimer timer;
+    private final CountDownTimer timer;
     private boolean firstMove = true;
     private boolean isSetOver = false;
 
@@ -62,7 +61,7 @@ public class GameBoardViewModel extends ViewModel {
     public void clearBoard() {
         this.isSetOver = false;
         this.gameBoard = new GameBoard();
-        notifyBoardListeners();
+        notifyGameBoardListener();
     }
 
     /**
@@ -112,7 +111,7 @@ public class GameBoardViewModel extends ViewModel {
 
 
         this.currentPlayer.setValue((this.isGameOver.getValue())? null : this.currentPlayer.getValue().next());
-        notifyBoardListeners();
+        notifyGameBoardListener();
     }
 
     private void calcPlayerWon(int x, int y) {
@@ -191,8 +190,8 @@ public class GameBoardViewModel extends ViewModel {
         this.isSetOver = true;
     }
 
-    public void addGameBoardListener(GameStateListener listener) {
-        this.gameStateListeners.add(listener);
+    public void setGameBoardListener(GameStateListener listener) {
+        this.gameStateListener = listener;
     }
 
     public GameBoard getGameBoard() {
@@ -215,9 +214,7 @@ public class GameBoardViewModel extends ViewModel {
         return scores;
     }
 
-    public void notifyBoardListeners() {
-        for (GameStateListener listener : this.gameStateListeners) {
-            listener.onGameBoardUpdated();
-        }
+    public void notifyGameBoardListener() {
+        this.gameStateListener.onGameBoardUpdated();
     }
 }
