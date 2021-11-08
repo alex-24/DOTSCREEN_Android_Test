@@ -11,7 +11,7 @@
 <br />
 <div align="center">
   <h3 align="center">Tic Tac Toe - Android</h3>
-  <img src="readme_images/project-logo.png" alt="Logo" width="100">
+  <img src="readme_images/project-logo.png" alt="Logo" width="400px">
 </div>
 
 
@@ -31,7 +31,7 @@ Until time runs out they can play as many sets as they want. At the end a popup 
 ## Screenshot
 
 <div align="center">
-    <img src="readme_images/screenshot.png">
+    <img src="readme_images/screenshot.png" width="250px">
 </div>
 <br/>
 
