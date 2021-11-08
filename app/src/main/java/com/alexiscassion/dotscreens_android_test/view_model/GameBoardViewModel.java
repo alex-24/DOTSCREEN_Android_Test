@@ -157,28 +157,27 @@ public class GameBoardViewModel extends ViewModel implements Serializable {
             return;
         }
 
-        // diagonals
-        if (x == y)  {
-            hasWon = true;
-            for (int i=0; i<3; i++) {
-                if (this.gameBoard.get(i, i) != this.currentPlayer.getValue()) {
-                    hasWon = false;
-                }
+        // diagonal TL->BR
+        hasWon = true;
+        for (int i=0; i<3; i++) {
+            if (this.gameBoard.get(i, i) != this.currentPlayer.getValue()) {
+                hasWon = false;
             }
-            if (hasWon){
-                setCurrentPlayerHasWon();
-                return;
-            }
+        }
+        if (hasWon){
+            setCurrentPlayerHasWon();
+            return;
+        }
 
-            hasWon = true;
-            for (int i=0; i<3; i++) {
-                if (this.gameBoard.get(2-i, i) != this.currentPlayer.getValue()) {
-                    hasWon = false;
-                }
+        // diagonal BL -> TR
+        hasWon = true;
+        for (int i=0; i<3; i++) {
+            if (this.gameBoard.get(2-i, i) != this.currentPlayer.getValue()) {
+                hasWon = false;
             }
-            if (hasWon){
-                setCurrentPlayerHasWon();
-            }
+        }
+        if (hasWon){
+            setCurrentPlayerHasWon();
         }
     }
 
