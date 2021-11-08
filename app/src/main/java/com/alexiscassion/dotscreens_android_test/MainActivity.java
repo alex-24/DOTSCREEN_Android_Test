@@ -77,6 +77,9 @@ public class MainActivity extends AppCompatActivity implements GameStateListener
         outState.putSerializable("gbvm", this.gameBoardViewModel);
     }
 
+    /**
+     * Attaches this activity with the {@link GameBoardViewModel} and it's callbacks.
+     */
     private void linkActivityWithViewModel() {
 
         // listen for board changes
@@ -127,6 +130,7 @@ public class MainActivity extends AppCompatActivity implements GameStateListener
     @Override
     protected void onResume() {
         super.onResume();
+        // adds FlexBox behavior on screen rotation
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             this.rootLinearLayout.setOrientation(LinearLayout.HORIZONTAL);
             this.rootLinearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
@@ -136,6 +140,9 @@ public class MainActivity extends AppCompatActivity implements GameStateListener
         }
     }
 
+    /**
+     * Gets the views from the layout file
+     */
     private void findViews(){
         this.rootLinearLayout = findViewById(R.id.activity_main_linear_layout_root);
         this.timerTextView = findViewById(R.id.activity_main_text_view_timer);
@@ -146,12 +153,18 @@ public class MainActivity extends AppCompatActivity implements GameStateListener
         this.gridView = findViewById(R.id.activity_main_grid_view);
     }
 
+    /**
+     * Redraws the board when it has been updated
+     */
     @Override
     public void onGameBoardUpdated() {
         //((GameBoardAdapter) this.gridView.getAdapter()).notifyDataSetChanged();
         this.gridView.setAdapter(new GameBoardAdapter(this, this.gameBoardViewModel));
     }
 
+    /**
+     * Shows a popup announcing the results of the game
+     */
     private void announceGameResults(){
         String message;
         int scoreP1 = gameBoardViewModel.getScores().getValue()[0];

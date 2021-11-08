@@ -13,6 +13,9 @@ import java.util.Random;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+/**
+ * Holds the Tic Tac Toe game logic
+ */
 public class GameBoardViewModel extends ViewModel implements Serializable {
 
     private GameStateListener gameStateListener;
@@ -57,7 +60,9 @@ public class GameBoardViewModel extends ViewModel implements Serializable {
         };
     }
 
-
+    /**
+     * Clears the board.
+     */
     public void clearBoard() {
         this.isSetOver = false;
         this.gameBoard = new GameBoard();
@@ -114,6 +119,12 @@ public class GameBoardViewModel extends ViewModel implements Serializable {
         notifyGameBoardListener();
     }
 
+    /**
+     * Tests if the current player has won the set.
+     *
+     * @param x the horizontal plsition where they played.
+     * @param y the vertical position where they played.
+     */
     private void calcPlayerWon(int x, int y) {
         boolean hasWon;
 
@@ -171,6 +182,9 @@ public class GameBoardViewModel extends ViewModel implements Serializable {
         }
     }
 
+    /**
+     * Updates the scores and ends the set
+     */
     private void setCurrentPlayerHasWon() {
         int[] scores = this.scores.getValue();
         scores[this.currentPlayer.getValue().ordinal()]++;
@@ -178,6 +192,9 @@ public class GameBoardViewModel extends ViewModel implements Serializable {
         this.isSetOver = true;
     }
 
+    /**
+     * Tests if the set ended in a draw and ends the set if that's the case.
+     */
     private void calcDraw(){
 
         for (int i = 0; i < 3; i++) {
@@ -190,30 +207,58 @@ public class GameBoardViewModel extends ViewModel implements Serializable {
         this.isSetOver = true;
     }
 
+    /**
+     * Sets a listener that is notified when the grd has been updated.
+     *
+     * @param listener the listener
+     */
     public void setGameBoardListener(GameStateListener listener) {
         this.gameStateListener = listener;
     }
 
+    /**
+     *
+     * @return the GameBoard
+     */
     public GameBoard getGameBoard() {
         return this.gameBoard;
     }
 
+    /**
+     *
+     * @return the current player
+     */
     public MutableLiveData<Player> getCurrentPlayer() {
         return currentPlayer;
     }
 
+    /**
+     *
+     * @return isGameOver (the timer reached 00:00)
+     */
     public MutableLiveData<Boolean> getIsGameOver() {
         return isGameOver;
     }
 
+    /**
+     *
+     * @return A string representation of the remaining time
+     */
     public MutableLiveData<String> getFormattedTimerLabel() {
         return formattedTimerLabel;
     }
 
+    /**
+     *
+     * @return the score of the game
+     */
     public MutableLiveData<int[]> getScores() {
         return scores;
     }
 
+    /**
+     * Notifies the listener that the GameBoard has been updated
+     */
     public void notifyGameBoardListener() {
         this.gameStateListener.onGameBoardUpdated();
     }

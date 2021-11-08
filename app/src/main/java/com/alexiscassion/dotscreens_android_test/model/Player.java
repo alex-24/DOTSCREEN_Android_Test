@@ -4,10 +4,17 @@ import android.graphics.Color;
 
 import com.alexiscassion.dotscreens_android_test.R;
 
+/**
+ * Represents a Tic Tac Toe player
+ */
 public enum Player {
 
     ONE, TWO;
 
+    /**
+     *
+     * @return The player whose turn it should be next
+     */
     public Player next() {
         switch (this) {
             case ONE:
@@ -19,6 +26,10 @@ public enum Player {
         }
     }
 
+    /**
+     *
+     * @return A color associated with the player
+     */
     public int getColor() {
         switch (this) {
             case ONE:
@@ -32,6 +43,10 @@ public enum Player {
         }
     }
 
+    /**
+     *
+     * @return An image representing the player
+     */
     public int getDrawableID() {
         switch (this) {
             case ONE:
@@ -45,6 +60,10 @@ public enum Player {
         }
     }
 
+    /**
+     *
+     * @return The player represented as a character
+     */
     public Character getSymbolText() {
         switch (this) {
             case ONE:
