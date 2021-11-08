@@ -20,15 +20,20 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<div align="center">
-    <img src="readme_images/screenshot.png" width="300px">
-</div>
-<br />
-
 This project was made as part of an Android Coding test.
 
 The app is a timed Tic Tac Toes game between two human players using the same device.
-Until time runs out they can play as many sets as they link and at the end a popup displays the overall game result.
+Until time runs out they can play as many sets as they want. At the end a popup displays the overall game result.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
+<!-- SCREENSHOT -->
+## Screenshot
+
+<div align="center">
+    <img src="readme_images/screenshot.png" width="250px">
+</div>
+<br/>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
