@@ -21,8 +21,9 @@
 ## About The Project
 
 <div align="center">
-    <img src="readme_images/screenshot.png">
+    <img src="readme_images/screenshot.png" width="300px">
 </div>
+<br />
 
 This project was made as part of an Android Coding test.
 
